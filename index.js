@@ -1,28 +1,79 @@
-var http = require('http');
-
-var server = http.createServer(function(req, res) {
-  res.writeHead(200);
-  res.end('Hello Http');
-});
-server.listen(8080);
+var ctx = new Array();
+function draw(){
 
 
 
-window.onload = function () {
-  MIDI.loadPlugin({
-    soundfontUrl: "./soundfont/",
-    instrument: "acoustic_grand_piano",
-    callback: function() {
-      var delay = 0; // play one note every quarter second
-      var note = 50; // the MIDI note
-      var velocity = 127; // how hard the note hits
-      // play the note
-      MIDI.setVolume(0, 127);
-      MIDI.noteOn(0, note, velocity, delay);
-      MIDI.noteOff(0, note, delay + 0.75);
-    }
-  });
-};
+var a5 = document.getElementById("A5");
+ctx[9]=a5.getContext("2d");
+ctx[9].fillStyle = "#009E8E";
+ctx[9].fillRect(0,0,50,25);
+
+
+var g5 = document.getElementById("G5");
+ctx[8]=g5.getContext("2d");
+ctx[8].fillStyle = "#009E8E";
+ctx[8].fillRect(0,0,50,25);
+
+var e5 = document.getElementById("E5");
+ctx[7]=e5.getContext("2d");
+ctx[7].fillStyle = "#009E8E";
+ctx[7].fillRect(0,0,50,25);
+
+var d5 = document.getElementById("D5");
+ctx[6]=d5.getContext("2d");
+ctx[6].fillStyle = "#009E8E";
+ctx[6].fillRect(0,0,50,25);
+
+var c5 = document.getElementById("C5");
+ctx[5]=c5.getContext("2d");
+ctx[5].fillStyle = "#009E8E";
+ctx[5].fillRect(0,0,50,25);
+
+var a4 = document.getElementById("A4");
+ctx[4]=a4.getContext("2d");
+ctx[4].fillStyle = "#009E8E";
+ctx[4].fillRect(0,0,50,25);
+
+
+var g4 = document.getElementById("G4");
+ctx[3]=g4.getContext("2d");
+ctx[3].fillStyle = "#009E8E";
+ctx[3].fillRect(0,0,50,25);
+
+var e4 = document.getElementById("E4");
+ctx[2]=e4.getContext("2d");
+ctx[2].fillStyle = "#009E8E";
+ctx[2].fillRect(0,0,50,25);
+
+var d4 = document.getElementById("D4");
+ctx[1]=d4.getContext("2d");
+ctx[1].fillStyle = "#009E8E";
+ctx[1].fillRect(0,0,50,25);
+
+var c4 = document.getElementById("C4");
+ctx[0]=c4.getContext("2d");
+ctx[0].fillStyle = "#009E8E";
+ctx[0].fillRect(0,0,50,25);
+
+
+}
+
+// stores mp3 file of C4
+var sounds = new Array();
+sounds[0] = new Audio('./sounds/C4.mp3');
+sounds[1] = new Audio('./sounds/D4.mp3');
+sounds[2] = new Audio('./sounds/E4.mp3');
+sounds[3] = new Audio('./sounds/G4.mp3');
+sounds[4] = new Audio('./sounds/A4.mp3');
+sounds[5] = new Audio('./sounds/C5.mp3');
+sounds[6] = new Audio('./sounds/D5.mp3');
+sounds[7] = new Audio('./sounds/E5.mp3');
+sounds[8] = new Audio('./sounds/G5.mp3');
+sounds[9] = new Audio('./sounds/A5.mp3');
+
+
+
+
 
 // Store frame for motion functions
 var previousFrame = null;
@@ -40,36 +91,67 @@ Leap.loop(controllerOptions, function(frame) {
   // Display Frame object data
   var frameOutput = document.getElementById("frameData");
 
-  var frameString = "Frame ID: " + frame.id  + "<br />"
-                  + "Timestamp: " + frame.timestamp + " &micro;s<br />"
-                  + "Hands: " + frame.hands.length + "<br />"
-                  + "Fingers: " + frame.fingers.length + "<br />"
-                  + "Tools: " + frame.tools.length + "<br />"
-                  + "Gestures: " + frame.gestures.length + "<br />";
+  var frameString = 
+              // "Frame ID: " + frame.id  + "<br />"
+              //     + "Timestamp: " + frame.timestamp + " &micro;s<br />"
+              //     + 
+                  "<br />"
+                  //"Hands: " + frame.hands.length + "<br />"
+                  // + "Fingers: " + frame.fingers.length + "<br />"
+                  // + "Tools: " + frame.tools.length + "<br />"
+                  // + "Gestures: " + frame.gestures.length + "<br />";
 
   // Frame motion factors
-  if (previousFrame && previousFrame.valid) {
-    var translation = frame.translation(previousFrame);
-    frameString += "Translation: " + vectorToString(translation) + " mm <br />";
+  // if (previousFrame && previousFrame.valid) {
+  //   var translation = frame.translation(previousFrame);
+  //   // frameString += "Translation: " + vectorToString(translation) + " mm <br />";
 
-    var rotationAxis = frame.rotationAxis(previousFrame);
-    var rotationAngle = frame.rotationAngle(previousFrame);
-    frameString += "Rotation axis: " + vectorToString(rotationAxis, 2) + "<br />";
-    frameString += "Rotation angle: " + rotationAngle.toFixed(2) + " radians<br />";
+  //   var rotationAxis = frame.rotationAxis(previousFrame);
+  //   var rotationAngle = frame.rotationAngle(previousFrame);
+  //   // frameString += "Rotation axis: " + vectorToString(rotationAxis, 2) + "<br />";
+  //   // frameString += "Rotation angle: " + rotationAngle.toFixed(2) + " radians<br />";
 
-    var scaleFactor = frame.scaleFactor(previousFrame);
-    frameString += "Scale factor: " + scaleFactor.toFixed(2) + "<br />";
-  }
-  frameOutput.innerHTML = "<div style='width:300px; float:left; padding:5px'>" + frameString + "</div>";
+  //   var scaleFactor = frame.scaleFactor(previousFrame);
+  //   // frameString += "Scale factor: " + scaleFactor.toFixed(2) + "<br />";
+  // }
+  // frameOutput.innerHTML = "<div style='width:300px; float:left; padding:5px'>" + frameString + "</div>";
 
   // custom function to convert direction coordinate to pitch
   // we'll only use direction coordinates 0.0 to 0.6
   // C = 0.0, D = 0.05, E = 0.1,...,high C = 0.6
 
   var coordinateToPitch = function(coordinate){
-    pitchNumber = (parseInt(coordinate/0.05, 10)) % 7 + 65;
-    pitch = String.fromCharCode(pitchNumber);
-    return pitch;
+    //pitchNumber = (parseInt(coordinate/0.05, 10)) % 7 + 65;
+    //pitch = String.fromCharCode(pitchNumber);
+    //return pitch;
+    pitchNumber = parseInt((coordinate - 0.2)/0.07, 10) % 10;
+    return pitchNumber;
+  }
+
+  var playPitch = function(pitch){
+      sounds[pitch].play();
+  }
+
+  var changeColorActive = function(pitch){
+      ctx[pitch].clearRect(0,0,50,25);
+      ctx[pitch].save();
+      ctx[pitch].fillStyle = "#F80012";
+      ctx[pitch].beginPath();
+      ctx[pitch].rect(0,0,50,25);
+      ctx[pitch].fill();
+      ctx[pitch].restore();
+
+  }
+
+    var changeColorPassive = function(pitch){
+      ctx[pitch].clearRect(0,0,50,25);
+      ctx[pitch].save();
+      ctx[pitch].fillStyle = "#009E8E";
+      ctx[pitch].beginPath();
+      ctx[pitch].rect(0,0,50,25);
+      ctx[pitch].fill();
+      ctx[pitch].restore();
+
   }
 
   // Display Hand object data
@@ -79,30 +161,39 @@ Leap.loop(controllerOptions, function(frame) {
     for (var i = 0; i < frame.hands.length; i++) {
       var hand = frame.hands[i];
 
-      handString += "<div style='width:300px; float:left; padding:5px'>";
-      handString += "Hand ID: " + hand.id + "<br />";
-      handString += "Direction: " + vectorToString(hand.direction, 2) + "<br />";
+      // handString += "<div style='width:300px; float:left; padding:5px'>";
+      // handString += "Hand ID: " + hand.id + "<br />";
+      // handString += "Direction: " + vectorToString(hand.direction, 2) + "<br />";
 
-      handString += "Corresponding pitch: " + coordinateToPitch(hand.direction[1]) + "<br />";
+      // handString += "Corresponding pitch: " + coordinateToPitch(hand.direction[1]) + "<br />";
+      playPitch(coordinateToPitch(hand.direction[1]));
+      changeColorActive(coordinateToPitch(hand.direction[1]));
+      for (var i = 0; i < 10; i++){
+        if (i != coordinateToPitch(hand.direction[1])) {
+          changeColorPassive(i);
+        }
+      }
 
-      handString += "Palm normal: " + vectorToString(hand.palmNormal, 2) + "<br />";
-      handString += "Palm position: " + vectorToString(hand.palmPosition) + " mm<br />";
-      handString += "Palm velocity: " + vectorToString(hand.palmVelocity) + " mm/s<br />";
-      handString += "Sphere center: " + vectorToString(hand.sphereCenter) + " mm<br />";
-      handString += "Sphere radius: " + hand.sphereRadius.toFixed(1) + " mm<br />";
+
+
+      // handString += "Palm normal: " + vectorToString(hand.palmNormal, 2) + "<br />";
+      // handString += "Palm position: " + vectorToString(hand.palmPosition) + " mm<br />";
+      // handString += "Palm velocity: " + vectorToString(hand.palmVelocity) + " mm/s<br />";
+      // handString += "Sphere center: " + vectorToString(hand.sphereCenter) + " mm<br />";
+      // handString += "Sphere radius: " + hand.sphereRadius.toFixed(1) + " mm<br />";
 
       // Hand motion factors
       if (previousFrame && previousFrame.valid) {
         var translation = hand.translation(previousFrame);
-        handString += "Translation: " + vectorToString(translation) + " mm<br />";
+        // handString += "Translation: " + vectorToString(translation) + " mm<br />";
 
         var rotationAxis = hand.rotationAxis(previousFrame, 2);
         var rotationAngle = hand.rotationAngle(previousFrame);
-        handString += "Rotation axis: " + vectorToString(rotationAxis) + "<br />";
-        handString += "Rotation angle: " + rotationAngle.toFixed(2) + " radians<br />";
+        // handString += "Rotation axis: " + vectorToString(rotationAxis) + "<br />";
+        // handString += "Rotation angle: " + rotationAngle.toFixed(2) + " radians<br />";
 
         var scaleFactor = hand.scaleFactor(previousFrame);
-        handString += "Scale factor: " + scaleFactor.toFixed(2) + "<br />";
+        // handString += "Scale factor: " + scaleFactor.toFixed(2) + "<br />";
       }
 
       // IDs of pointables (fingers and tools) associated with this hand
@@ -119,98 +210,98 @@ Leap.loop(controllerOptions, function(frame) {
           }
         }
         if (fingerIds.length > 0) {
-          handString += "Fingers IDs: " + fingerIds.join(", ") + "<br />";
+          // handString += "Fingers IDs: " + fingerIds.join(", ") + "<br />";
         }
         if (toolIds.length > 0) {
-          handString += "Tools IDs: " + toolIds.join(", ") + "<br />";
+          // handString += "Tools IDs: " + toolIds.join(", ") + "<br />";
         }
       }
 
-      handString += "</div>";
+      // handString += "</div>";
     }
   }
   else {
-    handString += "No hands";
+    // handString += "No hands";
   }
   handOutput.innerHTML = handString;
 
   // Display Pointable (finger and tool) object data
-  var pointableOutput = document.getElementById("pointableData");
-  var pointableString = "";
-  if (frame.pointables.length > 0) {
-    for (var i = 0; i < frame.pointables.length; i++) {
-      var pointable = frame.pointables[i];
+  // var pointableOutput = document.getElementById("pointableData");
+  // var pointableString = "";
+  // if (frame.pointables.length > 0) {
+  //   for (var i = 0; i < frame.pointables.length; i++) {
+  //     var pointable = frame.pointables[i];
 
-      pointableString += "<div style='width:250px; float:left; padding:5px'>";
-      pointableString += "Pointable ID: " + pointable.id + "<br />";
-      pointableString += "Belongs to hand with ID: " + pointable.handId + "<br />";
+  //     pointableString += "<div style='width:250px; float:left; padding:5px'>";
+  //     pointableString += "Pointable ID: " + pointable.id + "<br />";
+  //     pointableString += "Belongs to hand with ID: " + pointable.handId + "<br />";
 
-      if (pointable.tool) {
-        pointableString += "Classified as a tool <br />";
-        pointableString += "Length: " + pointable.length.toFixed(1) + " mm<br />";
-        pointableString += "Width: "  + pointable.width.toFixed(1) + " mm<br />";
-      }
-      else {
-        pointableString += "Classified as a finger<br />";
-        pointableString += "Length: " + pointable.length.toFixed(1) + " mm<br />";
-      }
+  //     if (pointable.tool) {
+  //       pointableString += "Classified as a tool <br />";
+  //       pointableString += "Length: " + pointable.length.toFixed(1) + " mm<br />";
+  //       pointableString += "Width: "  + pointable.width.toFixed(1) + " mm<br />";
+  //     }
+  //     else {
+  //       pointableString += "Classified as a finger<br />";
+  //       pointableString += "Length: " + pointable.length.toFixed(1) + " mm<br />";
+  //     }
 
-      pointableString += "Direction: " + vectorToString(pointable.direction, 2) + "<br />";
-      pointableString += "Tip position: " + vectorToString(pointable.tipPosition) + " mm<br />";
-      pointableString += "Tip velocity: " + vectorToString(pointable.tipVelocity) + " mm/s<br />";
+  //     pointableString += "Direction: " + vectorToString(pointable.direction, 2) + "<br />";
+  //     pointableString += "Tip position: " + vectorToString(pointable.tipPosition) + " mm<br />";
+  //     pointableString += "Tip velocity: " + vectorToString(pointable.tipVelocity) + " mm/s<br />";
 
-      pointableString += "</div>";
-    }
-  }
-  else {
-    pointableString += "<div>No pointables</div>";
-  }
-  pointableOutput.innerHTML = pointableString;
+  //     pointableString += "</div>";
+  //   }
+  // }
+  // else {
+  //   // pointableString += "<div>No pointables</div>";
+  // }
+  // pointableOutput.innerHTML = pointableString;
 
   // Display Gesture object data
-  var gestureOutput = document.getElementById("gestureData");
-  var gestureString = "";
-  if (frame.gestures.length > 0) {
-    if (pauseOnGesture) {
-      togglePause();
-    }
-    for (var i = 0; i < frame.gestures.length; i++) {
-      var gesture = frame.gestures[i];
-      gestureString += "Gesture ID: " + gesture.id + ", "
-                    + "type: " + gesture.type + ", "
-                    + "state: " + gesture.state + ", "
-                    + "hand IDs: " + gesture.handIds.join(", ") + ", "
-                    + "pointable IDs: " + gesture.pointableIds.join(", ") + ", "
-                    + "duration: " + gesture.duration + " &micro;s, ";
+  // var gestureOutput = document.getElementById("gestureData");
+  // var gestureString = "";
+  // if (frame.gestures.length > 0) {
+  //   if (pauseOnGesture) {
+  //     togglePause();
+  //   }
+  //   for (var i = 0; i < frame.gestures.length; i++) {
+  //     var gesture = frame.gestures[i];
+  //     gestureString += "Gesture ID: " + gesture.id + ", "
+  //                   + "type: " + gesture.type + ", "
+  //                   + "state: " + gesture.state + ", "
+  //                   + "hand IDs: " + gesture.handIds.join(", ") + ", "
+  //                   + "pointable IDs: " + gesture.pointableIds.join(", ") + ", "
+  //                   + "duration: " + gesture.duration + " &micro;s, ";
 
-      switch (gesture.type) {
-        case "circle":
-          gestureString += "center: " + vectorToString(gesture.center) + " mm, "
-                        + "normal: " + vectorToString(gesture.normal, 2) + ", "
-                        + "radius: " + gesture.radius.toFixed(1) + " mm, "
-                        + "progress: " + gesture.progress.toFixed(2) + " rotations";
-          break;
-        case "swipe":
-          gestureString += "start position: " + vectorToString(gesture.startPosition) + " mm, "
-                        + "current position: " + vectorToString(gesture.position) + " mm, "
-                        + "direction: " + vectorToString(gesture.direction, 2) + ", "
-                        + "speed: " + gesture.speed.toFixed(1) + " mm/s";
-          break;
-        case "screenTap":
-        case "keyTap":
-          gestureString += "position: " + vectorToString(gesture.position) + " mm, "
-                        + "direction: " + vectorToString(gesture.direction, 2);
-          break;
-        default:
-          gestureString += "unkown gesture type";
-      }
-      gestureString += "<br />";
-    }
-  }
-  else {
-    gestureString += "No gestures";
-  }
-  gestureOutput.innerHTML = gestureString;
+  //     switch (gesture.type) {
+  //       case "circle":
+  //         gestureString += "center: " + vectorToString(gesture.center) + " mm, "
+  //                       + "normal: " + vectorToString(gesture.normal, 2) + ", "
+  //                       + "radius: " + gesture.radius.toFixed(1) + " mm, "
+  //                       + "progress: " + gesture.progress.toFixed(2) + " rotations";
+  //         break;
+  //       case "swipe":
+  //         gestureString += "start position: " + vectorToString(gesture.startPosition) + " mm, "
+  //                       + "current position: " + vectorToString(gesture.position) + " mm, "
+  //                       + "direction: " + vectorToString(gesture.direction, 2) + ", "
+  //                       + "speed: " + gesture.speed.toFixed(1) + " mm/s";
+  //         break;
+  //       case "screenTap":
+  //       case "keyTap":
+  //         gestureString += "position: " + vectorToString(gesture.position) + " mm, "
+  //                       + "direction: " + vectorToString(gesture.direction, 2);
+  //         break;
+  //       default:
+  //         gestureString += "unkown gesture type";
+  //     }
+  //     gestureString += "<br />";
+  //   }
+  // }
+  // else {
+  //   gestureString += "No gestures";
+  // }
+  // gestureOutput.innerHTML = gestureString;
 
   // Store frame for motion functions
   previousFrame = frame;
