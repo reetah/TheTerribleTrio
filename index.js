@@ -6,54 +6,54 @@ function draw(){
 var a5 = document.getElementById("A5");
 ctx[9]=a5.getContext("2d");
 ctx[9].fillStyle = "#009E8E";
-ctx[9].fillRect(0,0,50,25);
+ctx[9].fillRect(0,0,70,25);
 
 
 var g5 = document.getElementById("G5");
 ctx[8]=g5.getContext("2d");
 ctx[8].fillStyle = "#009E8E";
-ctx[8].fillRect(0,0,50,25);
+ctx[8].fillRect(0,0,70,25);
 
 var e5 = document.getElementById("E5");
 ctx[7]=e5.getContext("2d");
 ctx[7].fillStyle = "#009E8E";
-ctx[7].fillRect(0,0,50,25);
+ctx[7].fillRect(0,0,70,25);
 
 var d5 = document.getElementById("D5");
 ctx[6]=d5.getContext("2d");
 ctx[6].fillStyle = "#009E8E";
-ctx[6].fillRect(0,0,50,25);
+ctx[6].fillRect(0,0,70,25);
 
 var c5 = document.getElementById("C5");
 ctx[5]=c5.getContext("2d");
 ctx[5].fillStyle = "#009E8E";
-ctx[5].fillRect(0,0,50,25);
+ctx[5].fillRect(0,0,70,25);
 
 var a4 = document.getElementById("A4");
 ctx[4]=a4.getContext("2d");
 ctx[4].fillStyle = "#009E8E";
-ctx[4].fillRect(0,0,50,25);
+ctx[4].fillRect(0,0,70,25);
 
 
 var g4 = document.getElementById("G4");
 ctx[3]=g4.getContext("2d");
 ctx[3].fillStyle = "#009E8E";
-ctx[3].fillRect(0,0,50,25);
+ctx[3].fillRect(0,0,70,25);
 
 var e4 = document.getElementById("E4");
 ctx[2]=e4.getContext("2d");
 ctx[2].fillStyle = "#009E8E";
-ctx[2].fillRect(0,0,50,25);
+ctx[2].fillRect(0,0,70,25);
 
 var d4 = document.getElementById("D4");
 ctx[1]=d4.getContext("2d");
 ctx[1].fillStyle = "#009E8E";
-ctx[1].fillRect(0,0,50,25);
+ctx[1].fillRect(0,0,70,25);
 
 var c4 = document.getElementById("C4");
 ctx[0]=c4.getContext("2d");
 ctx[0].fillStyle = "#009E8E";
-ctx[0].fillRect(0,0,50,25);
+ctx[0].fillRect(0,0,70,25);
 
 
 }
@@ -70,6 +70,40 @@ sounds[6] = new Audio('./sounds/D5.mp3');
 sounds[7] = new Audio('./sounds/E5.mp3');
 sounds[8] = new Audio('./sounds/G5.mp3');
 sounds[9] = new Audio('./sounds/A5.mp3');
+
+function pentatonic() {
+sounds[0] = new Audio('./sounds/C4.mp3');
+sounds[1] = new Audio('./sounds/D4.mp3');
+sounds[2] = new Audio('./sounds/E4.mp3');
+sounds[3] = new Audio('./sounds/G4.mp3');
+sounds[4] = new Audio('./sounds/A4.mp3');
+sounds[5] = new Audio('./sounds/C5.mp3');
+sounds[6] = new Audio('./sounds/D5.mp3');
+sounds[7] = new Audio('./sounds/E5.mp3');
+sounds[8] = new Audio('./sounds/G5.mp3');
+sounds[9] = new Audio('./sounds/A5.mp3');
+
+}
+
+function blues(){
+sounds[0] = new Audio('./sounds/C4.mp3');
+sounds[1] = new Audio('./sounds/Eb4.mp3');
+sounds[2] = new Audio('./sounds/F4.mp3');
+sounds[3] = new Audio('./sounds/Gb4.mp3');
+sounds[4] = new Audio('./sounds/G4.mp3');
+sounds[5] = new Audio('./sounds/Bb4.mp3');
+sounds[6] = new Audio('./sounds/C5.mp3');
+sounds[7] = new Audio('./sounds/Eb5.mp3');
+sounds[8] = new Audio('./sounds/F5.mp3');
+sounds[9] = new Audio('./sounds/Gb5.mp3');
+}
+
+
+
+
+
+
+
 
 
 
@@ -133,22 +167,22 @@ Leap.loop(controllerOptions, function(frame) {
   }
 
   var changeColorActive = function(pitch){
-      ctx[pitch].clearRect(0,0,50,25);
+      ctx[pitch].clearRect(0,0,70,25);
       ctx[pitch].save();
       ctx[pitch].fillStyle = "#F80012";
       ctx[pitch].beginPath();
-      ctx[pitch].rect(0,0,50,25);
+      ctx[pitch].rect(0,0,70,25);
       ctx[pitch].fill();
       ctx[pitch].restore();
 
   }
 
     var changeColorPassive = function(pitch){
-      ctx[pitch].clearRect(0,0,50,25);
+      ctx[pitch].clearRect(0,0,70,25);
       ctx[pitch].save();
       ctx[pitch].fillStyle = "#009E8E";
       ctx[pitch].beginPath();
-      ctx[pitch].rect(0,0,50,25);
+      ctx[pitch].rect(0,0,70,25);
       ctx[pitch].fill();
       ctx[pitch].restore();
 
@@ -325,6 +359,7 @@ function togglePause() {
     document.getElementById("pause").innerText = "Pause";
   }
 }
+
 
 function pauseForGestures() {
   if (document.getElementById("pauseOnGesture").checked) {

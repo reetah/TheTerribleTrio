@@ -20,10 +20,12 @@
 
 </head>
 <body onload="draw()" bgcolor="#17101A">
+  <center>
 <h1> DJESTURE</h1>
-<div id="main">
-<!--   <button id="pause" onclick="togglePause()">Pause</button>
-  <input type="checkbox" id="pauseOnGesture" onclick="pauseForGestures()">Pause on gesture</input> -->
+<!-- <div id="main"> -->
+
+ <!--  <input type="checkbox" id="pauseOnGesture" onclick="pauseForGestures()">Pause on gesture</input> -->
+
 <!--   <h3>Frame data:</h3>
   <div id="frameData"></div>
   <div style="clear:both;"></div> -->
@@ -35,48 +37,51 @@
   <div style="clear:both;"></div>
   <h3>Gesture data:</h3>
   <div id="gestureData"></div> -->
+
 </div>
-<center>
+
 <p>
-  <canvas id="A5" width = "50" height = "25">
+  <canvas id="A5" width = "70" height = "25">
 </canvas>
 </p>
 <p>
-  <canvas id="G5" width = "50" height = "25">
+  <canvas id="G5" width = "70" height = "25">
 </canvas>
 </p>
 <p>
-  <canvas id="E5" width = "50" height = "25">
+  <canvas id="E5" width = "70" height = "25">
 </canvas>
 </p>
 <p>
-  <canvas id="D5" width = "50" height = "25">
+  <canvas id="D5" width = "70" height = "25">
 </canvas>
 </p>
 <p>
-  <canvas id="C5" width = "50" height = "25">
+  <canvas id="C5" width = "70" height = "25">
 </canvas>
 </p>
 <p>
-  <canvas id="A4" width = "50" height = "25">
+  <canvas id="A4" width = "70" height = "25">
 </canvas>
 </p>
 <p>
-  <canvas id="G4" width = "50" height = "25">
+  <canvas id="G4" width = "70" height = "25">
 </canvas>
 </p>
 <p>
-  <canvas id="E4" width = "50" height = "25">
+  <canvas id="E4" width = "70" height = "25">
 </canvas>
 </p>
 <p>
-  <canvas id="D4" width = "50" height = "25">
+  <canvas id="D4" width = "70" height = "25">
 </canvas>
 </p>
 <p>
-  <canvas id="C4" width = "50" height = "25">
+  <canvas id="C4" width = "70" height = "25">
 </canvas>
-</p>
+</p> <br>
+ <input type = "radio" name = "mode" onclick="pentatonic()" checked = "checked"> Pentatonic  <input type = "radio" name = "mode" onclick="blues()"> Blues </input> <br> <br><br>
+  <button id="pause" onclick="togglePause()">Pause</button>
 </center>
 
 
