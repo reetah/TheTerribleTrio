@@ -58,7 +58,7 @@ ctx[0].fillRect(0,0,50,25);
 
 }
 
-// stores mp3 file of C4
+// stores mp3 files
 var sounds = new Array();
 sounds[0] = new Audio('./sounds/C4.mp3');
 sounds[1] = new Audio('./sounds/D4.mp3');
@@ -120,11 +120,11 @@ Leap.loop(controllerOptions, function(frame) {
   // we'll only use direction coordinates 0.0 to 0.6
   // C = 0.0, D = 0.05, E = 0.1,...,high C = 0.6
 
-  var coordinateToPitch = function(coordinate){
+  var coordinateToPitchY = function(coordinate){
     //pitchNumber = (parseInt(coordinate/0.05, 10)) % 7 + 65;
     //pitch = String.fromCharCode(pitchNumber);
     //return pitch;
-    pitchNumber = parseInt((coordinate - 0.2)/0.07, 10) % 10;
+    pitchNumber = parseInt((coordinate - 0.1)/0.07, 10) % 10;
     return pitchNumber;
   }
 
@@ -166,10 +166,10 @@ Leap.loop(controllerOptions, function(frame) {
       // handString += "Direction: " + vectorToString(hand.direction, 2) + "<br />";
 
       // handString += "Corresponding pitch: " + coordinateToPitch(hand.direction[1]) + "<br />";
-      playPitch(coordinateToPitch(hand.direction[1]));
-      changeColorActive(coordinateToPitch(hand.direction[1]));
+      playPitch(coordinateToPitchY(hand.direction[1]));
+      changeColorActive(coordinateToPitchY(hand.direction[1]));
       for (var i = 0; i < 10; i++){
-        if (i != coordinateToPitch(hand.direction[1])) {
+        if (i != coordinateToPitchY(hand.direction[1])) {
           changeColorPassive(i);
         }
       }
